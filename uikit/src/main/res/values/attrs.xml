@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AgoraView">
+        <attr name="local" format="boolean" />
+    </declare-styleable>
+    
+    <declare-styleable name="AgoraViewContainer">
+        <attr name="corner_radius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="AgoraRecyclerView">
+        <attr name="maxViewID" format="reference" />
+    </declare-styleable>
+</resources>

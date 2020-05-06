@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline_header"
+        android:background="@color/background" >
+
+        <io.agora.uikit.ui.AgoraChannelTextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
+
+    <io.agora.uikit.ui.AgoraView
+        android:id="@+id/max_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@id/guideline_header"
+        app:layout_constraintBottom_toTopOf="@id/guideline_body"
+        app:local="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline_minview"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_body"
+        android:background="@color/background_transparent"
+        android:gravity="center|start"
+        android:layout_height="0dp" >
+
+        <io.agora.uikit.ui.mincontainer.RemoteCountHolder
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp" />
+
+        <io.agora.uikit.ui.mincontainer.AgoraRecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:maxViewID="@id/max_view"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline_body"
+        android:layout_height="0.7dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="center|bottom"
+        android:background="#191617"
+        android:gravity="center"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/guideline_body"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingVertical="15dp">
+
+        <io.agora.uikit.ui.buttons.AudioButton
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
+
+        <io.agora.uikit.ui.buttons.VideoButton
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="8dp"
+            android:background="#d7cec8" />
+
+        <io.agora.uikit.ui.buttons.SwitchCameraButton
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="8dp"
+            android:background="#d7cec8" />
+
+        <io.agora.uikit.ui.buttons.EndCallButton
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
+
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.06"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_minview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.72" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

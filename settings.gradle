@@ -1,0 +1,3 @@
+rootProject.name='Android UI Kit'
+include ':app'
+include ':uikit'
