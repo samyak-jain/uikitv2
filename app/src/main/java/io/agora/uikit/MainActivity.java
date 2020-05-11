@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AgoraRTC.instance().bootstrap(this, "appid", "channelname");
-        setContentView(R.layout.group_template);
+        setContentView(UITemplates.GROUP_CALL);
     }
 
     @Override
