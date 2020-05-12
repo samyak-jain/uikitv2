@@ -15,7 +15,9 @@ class AudioButton @JvmOverloads constructor(
         setImageResource(R.drawable.ic_mute_1)
 
         setOnClickListener {
-            AgoraRTC.instance()?.muteLocalAudioStream(!buttonPressed)
+
+            // Toggle mute local audio functionality
+            AgoraRTC.instance().muteLocalAudioStream(!buttonPressed)
             buttonPressed = !buttonPressed
         }
     }

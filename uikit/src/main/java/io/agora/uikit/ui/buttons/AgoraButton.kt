@@ -1,13 +1,10 @@
 package io.agora.uikit.ui.buttons
 
 import android.content.Context
-import android.content.res.Resources
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DimenRes
-import androidx.core.view.marginLeft
 import androidx.core.view.setPadding
 import io.agora.uikit.R
 import io.agora.uikit.ui.DPToPx

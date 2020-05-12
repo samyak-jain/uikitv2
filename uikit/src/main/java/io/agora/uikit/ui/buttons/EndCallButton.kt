@@ -15,7 +15,9 @@ class EndCallButton @JvmOverloads constructor(
         background = context.getDrawable(R.drawable.end_button_background)
 
         this.setOnClickListener {
-            AgoraRTC.instance()?.leaveChannel()
+
+            // Leave the channel and destroy the RtcEngine
+            AgoraRTC.instance().leaveChannel()
             RtcEngine.destroy()
         }
     }

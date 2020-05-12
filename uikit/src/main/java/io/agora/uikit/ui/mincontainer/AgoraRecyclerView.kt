@@ -22,6 +22,7 @@ class AgoraRecyclerView @JvmOverloads constructor(
     @IdRes
     private var maxReference: Int? = null
 
+    // Event listener that will add/remove items from recycler view
     private var listener: IRtcEngineEventHandler = object : IRtcEngineEventHandler() {
         override fun onUserJoined(uid: Int, elapsed: Int) {
             super.onUserJoined(uid, elapsed)
@@ -49,6 +50,10 @@ class AgoraRecyclerView @JvmOverloads constructor(
 
         val tAttributes = context.obtainStyledAttributes(attrs, R.styleable.AgoraRecyclerView)
         try {
+            /*
+             Get reference to the Max View in the layout with which the video will switch when user
+             double taps on any min view
+             */
             maxReference = tAttributes.getResourceId(R.styleable.AgoraRecyclerView_maxViewID, -1)
         } finally {
             tAttributes.recycle()

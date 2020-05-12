@@ -32,8 +32,10 @@ class AgoraView @JvmOverloads constructor(
 
         val tAttributes = context.obtainStyledAttributes(attrs, R.styleable.AgoraView)
         try {
+            // Get attribute which tell us if this instance is for the local view or the remote view
             val local = tAttributes.getBoolean(R.styleable.AgoraView_local, false)
             if (local) {
+                // For local, we set the UID as 0
                 setUID(0)
             }
         } finally {
@@ -41,6 +43,17 @@ class AgoraView @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Control whether the surface view's surface is placed on top of another regular surface view
+     * in the window (but still behind the window itself). This is typically used to place
+     * overlays on top of an underlying media surface view.
+     *
+     * Note that this must be set before the surface view's containing window is attached to the window manager.
+     *
+     * Calling this overrides any previous call to setZOrderOnTop(boolean).
+     *
+     * @param isMediaOverlay
+     */
     fun setZOrderMediaOverlay(isMediaOverlay: Boolean) {
         try {
             removeView(surface)
@@ -51,6 +64,22 @@ class AgoraView @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Control whether the surface view's surface is placed on top of its window.
+     * Normally it is placed behind the window, to allow it to (for the most part) appear to
+     * composite with the views in the hierarchy. By setting this, you cause it to be placed
+     * above the window. This means that none of the contents of the window this SurfaceView is
+     * in will be visible on top of its surface.
+     *
+     * Note that this must be set before the surface view's containing window is attached to the
+     * window manager. If you target Build.VERSION_CODES#R the Z ordering can be changed
+     * dynamically if the backing surface is created, otherwise it would be applied at surface
+     * construction time.
+     *
+     * Calling this overrides any previous call to setZOrderMediaOverlay(boolean)
+     *
+     * @param onTop
+     */
     fun setZOrderOnTop(onTop: Boolean) {
         try {
             removeView(surface)
@@ -61,6 +90,17 @@ class AgoraView @JvmOverloads constructor(
         }
     }
 
+    /**
+     *
+     * Updates the display mode of this video view
+     *
+     * @param renderMode Sets the remote video display mode:
+     *
+     * - RENDER_MODE_HIDDEN(1): Uniformly scale the video until it fills the visible boundaries (cropped). One dimension of the video may have clipped contents.
+     * - RENDER_MODE_FIT(2): Uniformly scale the video until one of its dimension fits the boundary (zoomed to fit). Areas that are not filled due to the disparity in the aspect ratio are filled with black.
+     * - RENDER_MODE_ADAPTIVE(3): This mode is deprecated and Agora does not recommend using this mode.
+     *
+     */
     fun setRenderMode(@RenderMode renderMode: Int) {
         canvas.renderMode = renderMode
         if (canvas.uid == 0) {
@@ -88,6 +128,9 @@ class AgoraView @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Removes the surface view and adds it again.
+     */
     fun reCreateSurface() {
         removeView(surface)
         surface = RtcEngine.CreateRendererView(context)
@@ -95,6 +138,11 @@ class AgoraView @JvmOverloads constructor(
     }
 
 
+    /**
+     * Render the video feed of the specified UID
+     *
+     * @param uid User ID.
+     */
     fun setUID(uid: Int) {
         mUID = uid
         if (uid == 0) {

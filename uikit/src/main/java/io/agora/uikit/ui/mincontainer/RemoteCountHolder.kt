@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.Gravity
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.core.view.setPadding
 import androidx.core.widget.TextViewCompat
 import io.agora.rtc.IRtcEngineEventHandler
@@ -17,6 +16,8 @@ class RemoteCountHolder @JvmOverloads constructor(
 ) : androidx.appcompat.widget.AppCompatTextView(context, attrs, defStyleAttr) {
 
     var count = 0
+
+    // Change number in TextView as users join/leave the channel
     val listener = object : IRtcEngineEventHandler() {
         override fun onUserJoined(uid: Int, elapsed: Int) {
             count++
@@ -36,11 +37,11 @@ class RemoteCountHolder @JvmOverloads constructor(
         TextViewCompat.setAutoSizeTextTypeWithDefaults(this, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM)
         setTextColor(Color.parseColor("#d7cec8"))
         setPadding(DPToPx(context, 13))
-        AgoraRTC.instance()?.registerListener(listener)
+        AgoraRTC.instance().registerListener(listener)
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        AgoraRTC.instance()?.unregisterListener(listener)
+        AgoraRTC.instance().unregisterListener(listener)
     }
 }

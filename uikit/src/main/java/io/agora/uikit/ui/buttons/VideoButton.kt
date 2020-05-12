@@ -15,7 +15,9 @@ class VideoButton @JvmOverloads constructor(
         setImageResource(R.drawable.ic_video_off)
 
         setOnClickListener {
-            AgoraRTC.instance()?.muteLocalVideoStream(!buttonPressed)
+
+            // Toggle mute local Video Stream
+            AgoraRTC.instance().muteLocalVideoStream(!buttonPressed)
             buttonPressed = !buttonPressed
         }
     }

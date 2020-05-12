@@ -2,7 +2,6 @@ package io.agora.uikit.ui
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.TextView
 import io.agora.uikit.manager.AgoraRTC
 
 class AgoraChannelTextView @JvmOverloads constructor(
@@ -10,7 +9,8 @@ class AgoraChannelTextView @JvmOverloads constructor(
 ) : androidx.appcompat.widget.AppCompatTextView(context, attrs, defStyleAttr) {
 
     init {
-        text = AgoraRTC.instance()?.channel
+        // Set the content of the TextView to the name of the current Channel
+        text = AgoraRTC.instance().channel
     }
 
 }

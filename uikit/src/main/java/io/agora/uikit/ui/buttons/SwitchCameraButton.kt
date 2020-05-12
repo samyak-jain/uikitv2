@@ -13,7 +13,7 @@ class SwitchCameraButton @JvmOverloads constructor(
         this.setImageResource(R.drawable.switch_camera)
 
         this.setOnClickListener {
-            AgoraRTC.instance()?.sdk?.switchCamera()
+            AgoraRTC.instance().sdk?.switchCamera()
         }
     }
 
