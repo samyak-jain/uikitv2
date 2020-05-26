@@ -12,7 +12,7 @@
         app:layout_constraintBottom_toTopOf="@id/guideline_header"
         android:background="@color/background" >
 
-        <io.agora.uikit.ui.AgoraChannelTextView
+        <io.agora.agorauikit.ui.AgoraChannelTextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -21,7 +21,7 @@
 
     </LinearLayout>
 
-    <io.agora.uikit.ui.AgoraView
+    <io.agora.agorauikit.ui.AgoraView
         android:id="@+id/max_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -37,12 +37,12 @@
         android:gravity="center|start"
         android:layout_height="0dp" >
 
-        <io.agora.uikit.ui.mincontainer.RemoteCountHolder
+        <io.agora.agorauikit.ui.mincontainer.RemoteCountHolder
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_margin="10dp" />
 
-        <io.agora.uikit.ui.mincontainer.AgoraRecyclerView
+        <io.agora.agorauikit.ui.mincontainer.AgoraRecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:maxViewID="@id/max_view"
@@ -65,21 +65,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:paddingVertical="15dp">
 
-        <io.agora.uikit.ui.buttons.AudioButton
+        <io.agora.agorauikit.ui.buttons.AudioButton
             android:layout_width="60dp"
             android:layout_height="60dp" />
 
-        <io.agora.uikit.ui.buttons.VideoButton
-            android:layout_width="60dp"
-            android:layout_height="60dp" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="8dp"
-            android:background="#d7cec8" />
-
-        <io.agora.uikit.ui.buttons.SwitchCameraButton
+        <io.agora.agorauikit.ui.buttons.VideoButton
             android:layout_width="60dp"
             android:layout_height="60dp" />
 
@@ -89,7 +79,17 @@
             android:layout_marginHorizontal="8dp"
             android:background="#d7cec8" />
 
-        <io.agora.uikit.ui.buttons.EndCallButton
+        <io.agora.agorauikit.ui.buttons.SwitchCameraButton
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="8dp"
+            android:background="#d7cec8" />
+
+        <io.agora.agorauikit.ui.buttons.EndCallButton
             android:layout_width="60dp"
             android:layout_height="60dp" />
 
