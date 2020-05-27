@@ -1,5 +1,6 @@
 *.iml
 .gradle
+/agorauikit/publish.gradle
 /local.properties
 /.idea/caches
 /.idea/libraries
