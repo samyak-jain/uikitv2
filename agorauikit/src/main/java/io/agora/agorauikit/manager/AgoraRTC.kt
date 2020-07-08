@@ -5,11 +5,12 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Rect
 import android.util.Log
 import android.view.SurfaceView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import io.agora.rtc.BuildConfig
+import io.agora.agorauikit.BuildConfig
 import io.agora.rtc.Constants
 import io.agora.rtc.IRtcEngineEventHandler
 import io.agora.rtc.RtcEngine
@@ -19,6 +20,7 @@ import io.agora.agorauikit.manager.annotations.ChannelProfile
 import io.agora.agorauikit.manager.annotations.ClientRole
 import io.agora.agorauikit.manager.annotations.RenderMode
 import io.agora.agorauikit.manager.annotations.StreamType
+import io.agora.rtc.models.UserInfo
 
 
 class AgoraRTC private constructor() : SdkManager<RtcEngine?>() {
@@ -43,7 +45,11 @@ class AgoraRTC private constructor() : SdkManager<RtcEngine?>() {
      * @param appId The App ID issued to you by Agora
      * @param channel The unique channel name for the AgoraRTC session in the string format
      */
-    override fun bootstrap(context: Context, appId: String, channel: String) {
+    override fun bootstrap(
+        context: Context,
+        appId: String,
+        channel: String
+    ) {
         requestPermissions(context)
         start(context, appId)
         joinChannel(channel)
@@ -338,132 +344,435 @@ class AgoraRTC private constructor() : SdkManager<RtcEngine?>() {
         _sdk!!.setupRemoteVideo(canvas)
     }
 
-    private val eventHandler: IRtcEngineEventHandler = object : IRtcEngineEventHandler() {
+    private var eventHandler: IRtcEngineEventHandler = object : IRtcEngineEventHandler() {
+        override fun onActiveSpeaker(p0: Int) {
+            listeners.forEach {
+                it.onActiveSpeaker(p0)
+            }
+        }
 
-        /**
-         * Occurs when the local user joins a specified channel.
-         *
-         * The channel name assignment is based on channelName specified in the joinChannel method.
-         *
-         * If the uid is not specified when joinChannel is called, the server automatically assigns a uid.
-         *
-         * @param channel Channel name.
-         * @param uid User ID.
-         * @param elapsed Time elapsed (ms) from the user calling joinChannel until this callback is triggered.
-         */
-        override fun onJoinChannelSuccess(
-            channel: String,
-            uid: Int,
-            elapsed: Int
+        override fun onLocalAudioStats(p0: LocalAudioStats?) {
+            listeners.forEach {
+                it.onLocalAudioStats(p0)
+            }
+        }
+
+        override fun onRemoteSubscribeFallbackToAudioOnly(p0: Int, p1: Boolean) {
+            listeners.forEach {
+                it.onRemoteSubscribeFallbackToAudioOnly(p0, p1)
+            }
+        }
+
+        override fun onAudioMixingStateChanged(p0: Int, p1: Int) {
+            listeners.forEach {
+                it.onAudioMixingStateChanged(p0, p1)
+            }
+        }
+
+        override fun onRtcStats(p0: RtcStats?) {
+            listeners.forEach {
+                it.onRtcStats(p0)
+            }
+        }
+
+        override fun onFirstRemoteAudioFrame(p0: Int, p1: Int) {
+            listeners.forEach {
+                it.onFirstRemoteAudioFrame(p0, p1)
+            }
+        }
+
+        override fun onAudioRouteChanged(p0: Int) {
+            listeners.forEach {
+                it.onAudioRouteChanged(p0)
+            }
+        }
+
+        override fun onLocalVideoStat(p0: Int, p1: Int) {
+            listeners.forEach {
+                it.onLocalVideoStat(p0, p1)
+            }
+        }
+
+        override fun onAudioQuality(p0: Int, p1: Int, p2: Short, p3: Short) {
+            listeners.forEach {
+                it.onAudioQuality(p0, p1, p2, p3)
+            }
+        }
+
+        override fun onNetworkTypeChanged(p0: Int) {
+            listeners.forEach {
+                it.onNetworkTypeChanged(p0)
+            }
+        }
+
+        override fun onLocalAudioStateChanged(p0: Int, p1: Int) {
+            listeners.forEach {
+                it.onLocalAudioStateChanged(p0, p1)
+            }
+        }
+
+        override fun onFirstRemoteVideoFrame(p0: Int, p1: Int, p2: Int, p3: Int) {
+            listeners.forEach {
+                it.onFirstRemoteVideoFrame(p0, p1, p2, p3)
+            }
+        }
+
+        override fun onLastmileQuality(p0: Int) {
+            listeners.forEach {
+                it.onLastmileQuality(p0)
+            }
+        }
+
+        override fun onCameraExposureAreaChanged(p0: Rect?) {
+            listeners.forEach {
+                it.onCameraExposureAreaChanged(p0)
+            }
+        }
+
+        override fun onRemoteAudioTransportStats(p0: Int, p1: Int, p2: Int, p3: Int) {
+            listeners.forEach {
+                it.onRemoteAudioTransportStats(p0, p1, p2, p3)
+            }
+        }
+
+        override fun onFirstRemoteVideoDecoded(p0: Int, p1: Int, p2: Int, p3: Int) {
+            listeners.forEach {
+                it.onFirstRemoteVideoDecoded(p0, p1, p2, p3)
+            }
+        }
+
+        override fun onLocalVideoStateChanged(p0: Int, p1: Int) {
+            listeners.forEach {
+                it.onLocalVideoStateChanged(p0, p1)
+            }
+        }
+
+        override fun onTranscodingUpdated() {
+            listeners.forEach {
+                it.onTranscodingUpdated()
+            }
+        }
+
+        override fun onClientRoleChanged(p0: Int, p1: Int) {
+            listeners.forEach {
+                it.onClientRoleChanged(p0, p1)
+            }
+        }
+
+        override fun onApiCallExecuted(p0: Int, p1: String?, p2: String?) {
+            listeners.forEach {
+                it.onApiCallExecuted(p0, p1, p2)
+            }
+        }
+
+        override fun onFirstLocalAudioFrame(p0: Int) {
+            listeners.forEach {
+                it.onFirstLocalAudioFrame(p0)
+            }
+        }
+
+        override fun onRemoteAudioStats(p0: RemoteAudioStats?) {
+            listeners.forEach {
+                it.onRemoteAudioStats(p0)
+            }
+        }
+
+        override fun onRemoteVideoTransportStats(p0: Int, p1: Int, p2: Int, p3: Int) {
+            listeners.forEach {
+                it.onRemoteVideoTransportStats(p0, p1, p2, p3)
+            }
+        }
+
+        override fun onStreamUnpublished(p0: String?) {
+            listeners.forEach {
+                it.onStreamUnpublished(p0)
+            }
+        }
+
+        override fun onRejoinChannelSuccess(p0: String?, p1: Int, p2: Int) {
+            listeners.forEach {
+                it.onRejoinChannelSuccess(p0, p1, p2)
+            }
+        }
+
+        override fun onVideoStopped() {
+            listeners.forEach {
+                it.onVideoStopped()
+            }
+        }
+
+        override fun onLocalVideoStats(p0: LocalVideoStats?) {
+            listeners.forEach {
+                it.onLocalVideoStats(p0)
+            }
+        }
+
+        override fun onStreamMessageError(p0: Int, p1: Int, p2: Int, p3: Int, p4: Int) {
+            listeners.forEach {
+                it.onStreamMessageError(p0, p1, p2, p3, p4)
+            }
+        }
+
+        override fun onWarning(p0: Int) {
+            listeners.forEach {
+                it.onWarning(p0)
+            }
+        }
+
+        override fun onLocalPublishFallbackToAudioOnly(p0: Boolean) {
+            listeners.forEach {
+                it.onLocalPublishFallbackToAudioOnly(p0)
+            }
+        }
+
+        override fun onStreamPublished(p0: String?, p1: Int) {
+            listeners.forEach {
+                it.onStreamPublished(p0, p1)
+            }
+        }
+
+        override fun onMediaEngineStartCallSuccess() {
+            listeners.forEach {
+                it.onMediaEngineStartCallSuccess()
+            }
+        }
+
+        override fun onStreamInjectedStatus(p0: String?, p1: Int, p2: Int) {
+            listeners.forEach {
+                it.onStreamInjectedStatus(p0, p1, p2)
+            }
+        }
+
+        override fun onUserMuteVideo(p0: Int, p1: Boolean) {
+            listeners.forEach {
+                it.onUserMuteVideo(p0, p1)
+            }
+        }
+
+        override fun onJoinChannelSuccess(p0: String?, p1: Int, p2: Int) {
+            listeners.forEach {
+                it.onJoinChannelSuccess(p0, p1, p2)
+            }
+        }
+
+        override fun onLeaveChannel(p0: RtcStats?) {
+            listeners.forEach {
+                it.onLeaveChannel(p0)
+            }
+        }
+
+        override fun onConnectionStateChanged(p0: Int, p1: Int) {
+            listeners.forEach {
+                it.onConnectionStateChanged(p0, p1)
+            }
+        }
+
+        override fun onMicrophoneEnabled(p0: Boolean) {
+            listeners.forEach {
+                it.onMicrophoneEnabled(p0)
+            }
+        }
+
+        override fun onRemoteVideoStateChanged(p0: Int, p1: Int, p2: Int, p3: Int) {
+            listeners.forEach {
+                it.onRemoteVideoStateChanged(p0, p1, p2, p3)
+            }
+        }
+
+        override fun onFacePositionChanged(
+            p0: Int,
+            p1: Int,
+            p2: Array<out AgoraFacePositionInfo>?
         ) {
-            Log.i(TAG, "onJoinChannelSuccess $channel $uid")
-            for (listener in listeners) {
-                listener.onJoinChannelSuccess(channel, uid, elapsed)
+            listeners.forEach {
+                it.onFacePositionChanged(p0, p1, p2)
             }
         }
 
-        /**
-         * Reports the statistics of the RtcEngine once every two seconds.
-         *
-         * @param stats RTC engine statistics: RtcStats.
-         */
-        override fun onRtcStats(stats: RtcStats) {
-            for (listener in listeners) {
-                listener.onRtcStats(stats)
+        override fun onConnectionLost() {
+            listeners.forEach {
+                it.onConnectionLost()
             }
         }
 
-        /**
-         * Occurs when a remote user (Communication)/host (Live Broadcast) joins the channel.
-         *
-         * Communication profile: This callback notifies the app when another user joins the channel. If other users are already in the channel, the SDK also reports to the app on the existing users.
-         * Live Broadcast profile: This callback notifies the app when the host joins the channel. If other hosts are already in the channel, the SDK also reports to the app on the existing hosts. We recommend having at most 17 hosts in a channel
-         *
-         * The SDK triggers this callback under one of the following circumstances:
-         *
-         * A remote user/host joins the channel by calling the joinChannel method.
-         * A remote user switches the user role to the host by calling the setClientRole method after joining the channel
-         * A remote user/host rejoins the channel after a network interruption.
-         * The host injects an online media stream into the channel by calling the addInjectStreamUrl method.
-         *
-         * @param uid ID of the user or host who joins the channel.
-         * @param elapsed Time delay (ms) from the local user calling joinChannel/setClientRole until this callback is triggered.
-         */
-        override fun onUserJoined(uid: Int, elapsed: Int) {
-            Log.i(TAG, "onUserJoined $uid")
-            for (listener in listeners) {
-                listener.onUserJoined(uid, elapsed)
+        override fun onConnectionBanned() {
+            listeners.forEach {
+                it.onConnectionBanned()
             }
         }
 
-        /**
-         * Occurs when a remote user (Communication)/host (Live Broadcast) leaves the channel.
-         *
-         * There are two reasons for users to become offline:
-         *
-         * Leave the channel: When the user/host leaves the channel, the user/host sends a goodbye message. When this message is received, the SDK determines that the user/host leaves the channel.
-         * Drop offline: When no data packet of the user or host is received for a certain period of time (20 seconds for the communication profile, and more for the live broadcast profile), the SDK assumes that the user/host drops offline. A poor network connection may lead to false detections, so we recommend using the Agora RTM SDK for reliable offline detection.
-         *
-         * @param uid ID of the user or host who leaves the channel or goes offline.
-         * @param reason Reason why the user goes offline:
-         *
-         * - USER_OFFLINE_QUIT(0): The user left the current channel.
-         * - USER_OFFLINE_DROPPED(1): The SDK timed out and the user dropped offline because no data packet was received within a certain period of time. If a user quits the call and the message is not passed to the SDK (due to an unreliable channel), the SDK assumes the user dropped offline.
-         * - USER_OFFLINE_BECOME_AUDIENCE(2): (Live broadcast only.) The client role switched from the host to the audience.
-         *
-         */
-        override fun onUserOffline(uid: Int, reason: Int) {
-            Log.i(TAG, "onUserOffline $uid")
-            for (listener in listeners) {
-                listener.onUserOffline(uid, reason)
+        override fun onRemoteVideoStats(p0: RemoteVideoStats?) {
+            listeners.forEach {
+                it.onRemoteVideoStats(p0)
             }
         }
 
-        /**
-         * Reports the statistics of the audio stream from each remote user/host.
-         *
-         * The SDK triggers this callback once every two seconds for each remote user/host. If a channel includes multiple remote users, the SDK triggers this callback as many times.
-         * Schemes such as FEC (Forward Error Correction) or retransmission counter the frame loss rate. Hence, users may find the overall audio quality acceptable even when the packet loss rate is high.
-         *
-         * @param stats Statistics of the received remote audio streams: RemoteAudioStats.
-         */
-        override fun onRemoteAudioStats(stats: RemoteAudioStats) {
-            super.onRemoteAudioStats(stats)
+        override fun onFirstLocalVideoFrame(p0: Int, p1: Int, p2: Int) {
+            listeners.forEach {
+                it.onFirstLocalVideoFrame(p0, p1, p2)
+            }
         }
 
-        /**
-         * Occurs when the remote audio state changes.
-         * This callback indicates the state change of the remote audio stream.
-         *
-         * @param uid ID of the user whose audio state changes.
-         * @param state State of the remote audio:
-         *
-         * - REMOTE_AUDIO_STATE_STOPPED(0): The remote audio is in the default state, probably due to REMOTE_AUDIO_REASON_LOCAL_MUTED(3), REMOTE_AUDIO_REASON_REMOTE_MUTED(5), or REMOTE_AUDIO_REASON_REMOTE_OFFLINE(7).
-         * - REMOTE_AUDIO_STATE_STARTING(1): The first remote audio packet is received.
-         * - REMOTE_AUDIO_STATE_DECODING(2): The remote audio stream is decoded and plays normally, probably due to REMOTE_AUDIO_REASON_NETWORK_RECOVERY(2), REMOTE_AUDIO_REASON_LOCAL_UNMUTED(4) or REMOTE_AUDIO_REASON_REMOTE_UNMUTED(6).
-         * - REMOTE_AUDIO_STATE_FROZEN(3): The remote audio is frozen, probably due to REMOTE_AUDIO_REASON_NETWORK_CONGESTION(1).
-         * - REMOTE_AUDIO_STATE_FAILED(4): The remote audio fails to start, probably due to REMOTE_AUDIO_REASON_INTERNAL(0)
-         *
-         * @param reason The reason of the remote audio state change.
-         *
-         * - REMOTE_AUDIO_REASON_INTERNAL(0): Internal reasons
-         * - REMOTE_AUDIO_REASON_NETWORK_CONGESTION(1): Network congestion.
-         * - REMOTE_AUDIO_REASON_NETWORK_RECOVERY(2): Network recovery.
-         * - REMOTE_AUDIO_REASON_LOCAL_MUTED(3): The local user stops receiving the remote audio stream or disables the audio module.
-         * - REMOTE_AUDIO_REASON_LOCAL_UNMUTED(4): The local user resumes receiving the remote audio stream or enables the audio module.
-         * - REMOTE_AUDIO_REASON_REMOTE_MUTED(5): The remote user stops sending the audio stream or disables the audio module.
-         * - REMOTE_AUDIO_REASON_REMOTE_UNMUTED(6): The remote user resumes sending the audio stream or enables the audio module.
-         * - REMOTE_AUDIO_REASON_REMOTE_OFFLINE(7): The remote user leaves the channel.
-         *
-         * @param elapsed
-         */
-        override fun onRemoteAudioStateChanged(
-            uid: Int,
-            state: Int,
-            reason: Int,
-            elapsed: Int
-        ) {
-            super.onRemoteAudioStateChanged(uid, state, reason, elapsed)
+        override fun onCameraReady() {
+            listeners.forEach {
+                it.onCameraReady()
+            }
+        }
+
+        override fun onAudioEffectFinished(p0: Int) {
+            listeners.forEach {
+                it.onAudioEffectFinished(p0)
+            }
+        }
+
+        override fun onStreamMessage(p0: Int, p1: Int, p2: ByteArray?) {
+            listeners.forEach {
+                it.onStreamMessage(p0, p1, p2)
+            }
+        }
+
+        override fun onCameraFocusAreaChanged(p0: Rect?) {
+            listeners.forEach {
+                it.onCameraExposureAreaChanged(p0)
+            }
+        }
+
+        override fun onMediaEngineLoadSuccess() {
+            listeners.forEach {
+                it.onMediaEngineLoadSuccess()
+            }
+        }
+
+        override fun onChannelMediaRelayStateChanged(p0: Int, p1: Int) {
+            listeners.forEach {
+                it.onChannelMediaRelayStateChanged(p0, p1)
+            }
+        }
+
+        override fun onRequestToken() {
+            listeners.forEach {
+                it.onRequestToken()
+            }
+        }
+
+        override fun onUserEnableLocalVideo(p0: Int, p1: Boolean) {
+            listeners.forEach {
+                it.onUserEnableLocalVideo(p0, p1)
+            }
+        }
+
+        override fun onConnectionInterrupted() {
+            listeners.forEach {
+                it.onConnectionInterrupted()
+            }
+        }
+
+        override fun onRtmpStreamingStateChanged(p0: String?, p1: Int, p2: Int) {
+            listeners.forEach {
+                it.onRtmpStreamingStateChanged(p0, p1, p2)
+            }
+        }
+
+        override fun onAudioVolumeIndication(p0: Array<out AudioVolumeInfo>?, p1: Int) {
+            listeners.forEach {
+                it.onAudioVolumeIndication(p0, p1)
+            }
+        }
+
+        override fun onAudioMixingFinished() {
+            listeners.forEach {
+                it.onAudioMixingFinished()
+            }
+        }
+
+        override fun onUserJoined(p0: Int, p1: Int) {
+            listeners.forEach {
+                it.onUserJoined(p0, p1)
+            }
+        }
+
+        override fun onTokenPrivilegeWillExpire(p0: String?) {
+            listeners.forEach {
+                it.onTokenPrivilegeWillExpire(p0)
+            }
+        }
+
+        override fun onUserOffline(p0: Int, p1: Int) {
+            listeners.forEach {
+                it.onUserOffline(p0, p1)
+            }
+        }
+
+        override fun onNetworkQuality(p0: Int, p1: Int, p2: Int) {
+            listeners.forEach {
+                it.onNetworkQuality(p0, p1, p2)
+            }
+        }
+
+        override fun onRemoteVideoStat(p0: Int, p1: Int, p2: Int, p3: Int) {
+            listeners.forEach {
+                it.onRemoteVideoStat(p0, p1, p2, p3)
+            }
+        }
+
+        override fun onVideoSizeChanged(p0: Int, p1: Int, p2: Int, p3: Int) {
+            listeners.forEach {
+                it.onVideoSizeChanged(p0, p1, p2, p3)
+            }
+        }
+
+        override fun onLastmileProbeResult(p0: LastmileProbeResult?) {
+            listeners.forEach {
+                it.onLastmileProbeResult(p0)
+            }
+        }
+
+        override fun onChannelMediaRelayEvent(p0: Int) {
+            listeners.forEach {
+                it.onChannelMediaRelayEvent(p0)
+            }
+        }
+
+        override fun onUserMuteAudio(p0: Int, p1: Boolean) {
+            listeners.forEach {
+                it.onUserMuteAudio(p0, p1)
+            }
+        }
+
+        override fun onFirstRemoteAudioDecoded(p0: Int, p1: Int) {
+            listeners.forEach {
+                it.onFirstRemoteAudioDecoded(p0, p1)
+            }
+        }
+
+        override fun onLocalUserRegistered(p0: Int, p1: String?) {
+            listeners.forEach {
+                it.onLocalUserRegistered(p0, p1)
+            }
+        }
+
+        override fun onError(p0: Int) {
+            listeners.forEach {
+                it.onError(p0)
+            }
+        }
+
+        override fun onUserEnableVideo(p0: Int, p1: Boolean) {
+            listeners.forEach {
+                it.onUserEnableVideo(p0, p1)
+            }
+        }
+
+        override fun onUserInfoUpdated(p0: Int, p1: UserInfo?) {
+            listeners.forEach {
+                it.onUserInfoUpdated(p0, p1)
+            }
+        }
+
+        override fun onRemoteAudioStateChanged(p0: Int, p1: Int, p2: Int, p3: Int) {
+            listeners.forEach {
+                it.onRemoteAudioStateChanged(p0, p1, p2, p3)
+            }
         }
     }
 
@@ -491,7 +800,11 @@ class AgoraRTC private constructor() : SdkManager<RtcEngine?>() {
         if (ContextCompat.checkSelfPermission(context, permission) !=
             PackageManager.PERMISSION_GRANTED
         ) {
-            ActivityCompat.requestPermissions(context as Activity, REQUESTED_PERMISSIONS, PERMISSION_REQ_ID)
+            ActivityCompat.requestPermissions(
+                context as Activity,
+                REQUESTED_PERMISSIONS,
+                PERMISSION_REQ_ID
+            )
             return false
         }
         return true
@@ -505,7 +818,7 @@ class AgoraRTC private constructor() : SdkManager<RtcEngine?>() {
      */
     override fun requestPermissions(context: Context): Boolean {
         return checkSelfPermission(context, REQUESTED_PERMISSIONS[0]) &&
-            checkSelfPermission(context, REQUESTED_PERMISSIONS[1]) &&
-            checkSelfPermission(context, REQUESTED_PERMISSIONS[2])
+                checkSelfPermission(context, REQUESTED_PERMISSIONS[1]) &&
+                checkSelfPermission(context, REQUESTED_PERMISSIONS[2])
     }
 }

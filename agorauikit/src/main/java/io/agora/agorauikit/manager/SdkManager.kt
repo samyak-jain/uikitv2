@@ -1,6 +1,7 @@
 package io.agora.agorauikit.manager
 
 import android.content.Context
+import io.agora.rtc.IRtcEngineEventHandler
 
 abstract class SdkManager<Sdk> {
     var _sdk: Sdk? = null
