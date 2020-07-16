@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import io.agora.agorauikit.UITemplates;
 import io.agora.agorauikit.manager.AgoraRTC;
 import io.agora.rtc.IRtcEngineEventHandler;
 
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
                 super.onJoinChannelSuccess(s, i, i1);
             }
         });
-        setContentView(R.layout.activity_main);
+        setContentView(UITemplates.GROUP_CALL);
     }
 
     @Override
