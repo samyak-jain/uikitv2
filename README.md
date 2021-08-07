@@ -1,5 +1,7 @@
 # Agora UI Kit V2
 
+**Warning: This is now deprecated. Please use https://github.com/AgoraIO-Community/Android-UIKit**
+
 2 Ways to Use it
 
 ## 1st Method: Templates
